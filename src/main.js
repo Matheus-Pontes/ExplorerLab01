@@ -19,8 +19,6 @@ function setCardType(type = "default") {
     ccLogo.setAttribute('src', `/cc-${type}.svg`)
 }
 
-setCardType();
-
 const ccCVC = document.querySelector('#security-code');
 const maskCVCPattern = {
     mask: '0000'
@@ -73,6 +71,53 @@ const maskCardNumberPattern = {
     }
 };
 const maskCardNumber = IMask(cardNumber, maskCardNumberPattern);
+
+const addButton = document.querySelector('#btnAdd');
+
+addButton.addEventListener('click', function() {
+    // Fazer algo mirabolante
+});
+
+document.querySelector('form').addEventListener('submit', (event) => {
+    event.preventDefault();
+})
+
+const inputHolder = document.querySelector('#card-holder');
+
+inputHolder.addEventListener('input', function() {
+    const ccHolder = document.querySelector('.cc-holder .value');
+    ccHolder.innerHTML = inputHolder.value.length === 0 ? "XXXXXX XXXXXXX XXXXX": inputHolder.value;
+});
+
+maskCVC.on("accept",  function() {
+    updateCVC(maskCVC.value);
+});
+
+function updateCVC(code) {
+    const ccSecurity = document.querySelector('.cc-security .value');
+    ccSecurity.innerHTML = code.length == 0 ? "000" : code;
+}
+
+maskCardNumber.on("accept", function() {
+    const cardType = maskCardNumber.masked.currentMask.cardType;
+    setCardType(cardType);
+    updateCardNumber(maskCardNumber.value);
+});
+
+function updateCardNumber(number) {
+    const ccNumber = document.querySelector('.cc-number');
+    ccNumber.innerHTML = number == 0 ? "0000 0000 0000 0000" : number;
+}
+
+maskExpirationDate.on('accept', function() {
+    updateExparionDate(maskExpirationDate.value);
+});
+
+function updateExparionDate(date) {
+    const ccExpirationDate = document.querySelector('.cc-extra .value');
+
+    ccExpirationDate.innerHTML = date.length === 0 ? "02/32" : date;
+}
 
 // Deixar acessível na DOM pelo DEVTOOLS
 // globalThis.setCardType = setCardType;
