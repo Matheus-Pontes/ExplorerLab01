@@ -50,3 +50,47 @@ body {
   display: flex;
   align-items: center;
 }
+
+#modal-dialog {
+  position: absolute;
+  z-index: 999;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+
+  background-color: #121214dd;
+  border: none;
+
+  width: 100%;
+  height: 100%;
+}
+
+#modal-dialog h1 {
+  color: #27eeb3;
+  padding: 8px;
+}
+
+#modal-dialog button {
+  padding: 1rem 6rem;
+  font-size: 16px;
+  font-weight: bolder;
+  border: none;
+  background: #f75a68;
+  color: #fefefe;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#modal-dialog button:hover {
+  opacity: 0.95;
+}
+
+.hidden {
+  visibility: hidden;
+}
