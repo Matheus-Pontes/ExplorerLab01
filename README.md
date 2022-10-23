@@ -1,6 +1,7 @@
 <h1 align="center"> Explorer Lab #01 </h1>
 
 <p align="center">
+(Acessar projeto)[https://explorer-lab-credit-card-orpin.vercel.app/]
 Evento exclusivo e gratuito, promovido pela Rocketseat para ensino de tecnologias WEB.
 </p>
 
