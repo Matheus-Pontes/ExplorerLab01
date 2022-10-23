@@ -1,7 +1,7 @@
 /* CC */
 .cc {
   background: no-repeat center/cover;
-  background-image: url("/cc-bg.svg");
+  /* background-image: url("/cc-bg.svg"); */
   width: 36rem;
   height: 23rem;
   padding: 2rem;
@@ -9,7 +9,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: all ease-in-out .2s;
 }
+
+.cc:hover {
+  transform: translateY(-3px);
+
+} 
 
 .cc-logo {
   display: flex;
@@ -68,4 +74,8 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  border: 1px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 1.5px 3px #ccc;
+  background-color: #5555;
 }
