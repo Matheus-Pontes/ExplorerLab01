@@ -17,6 +17,7 @@ const cardNumber = document.querySelector("#card-number");
 const inputHolder = document.querySelector('#card-holder');
 const modalDialog = document.querySelector('#modal-dialog');
 const btnClose = document.querySelector('#btnClose');
+const ccHolder = document.querySelector('.cc-holder .value');
 
 const maskCVC = IMask(ccCVC, maskCVCPattern);
 const maskExpirationDate = IMask(ccExpirationDate, maskExpirationDatePattern);
@@ -37,40 +38,65 @@ function setCardType(type = "default") {
 }
 
 function fieldsValidate() {
-    
+    let response = false;
     let validateCVC = false;
 
     if(ccCVC.value.length == 4 || ccCVC.value.length == 3)
         validateCVC = false;
     else    
         validateCVC = true;
-    
-    if (cardNumber.value.length < 18 
-        || inputHolder.value.length < 26
-        || ccExpirationDate.value.length < 5
-        || validateCVC) {
-        return false;       
+
+    switch(maskCardNumber.masked.currentMask.cardType) {
+        case "visa": 
+            response = validateInputs(18, validateCVC);
+            break;
+        case "mastercard": 
+            response = validateInputs(19, validateCVC);
+            break;
+        case "rocketseat": 
+            response = validateInputs(20, validateCVC);
+            break;
+        case "default":
+            response = validateInputs(17, validateCVC);
+            break;
     }
 
+    return response;
+}
+
+function validateInputs(quantifyCaracters, validateCVC) {
+    if (inputHolder.value.length < quantifyCaracters || ccExpirationDate.value.length < 5 || validateCVC)
+        return false;       
     return true;
+} 
+
+function cleanFields() {
+    inputHolder.value = "";
+    ccExpirationDate.value = "";
+    ccCVC.value = "";
+    cardNumber.value = "";
+    ccHolder.innerHTML = "XXXXXX XXXXXXX XXXXX";
+    setCardType();
+    updateCardNumber("");
+    updateCVC("");
+    updateExparionDate("");
 }
 
 addButton.addEventListener('click', function() {
-    let isValidateFields = fieldsValidate(); 
-    if(isValidateFields)
+    if(fieldsValidate()) 
         modalDialog.classList.remove('hidden');
 });
 
 btnClose.addEventListener('click', function() {
     modalDialog.classList.add('hidden');
+    cleanFields();  
 });
 
 document.querySelector('form').addEventListener('submit', (event) => {
     event.preventDefault();
 })
 
-inputHolder.addEventListener('input', function() {
-    const ccHolder = document.querySelector('.cc-holder .value');
+inputHolder.addEventListener('keyup', function() {
     ccHolder.innerHTML = inputHolder.value.length === 0 ? "XXXXXX XXXXXXX XXXXX": inputHolder.value;
 });
 
@@ -100,9 +126,5 @@ maskExpirationDate.on('accept', function() {
 
 function updateExparionDate(date) {
     const ccExpirationDate = document.querySelector('.cc-extra .value');
-
     ccExpirationDate.innerHTML = date.length === 0 ? "00/00" : date;
 }
-
-// Deixar acessível na DOM pelo DEVTOOLS
-// globalThis.setCardType = setCardType;
